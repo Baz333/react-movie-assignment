@@ -16,18 +16,13 @@ import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png';
 
 export default function MovieCard({movie, action}) {
-    const {favourites, addToFavourites} = useContext(MoviesContext);
+    const {favourites} = useContext(MoviesContext);
 
     if(favourites.find((id) => id === movie.id)) {
         movie.favourite = true;
     } else {
         movie.favourite = false;
     }
-
-    const handleAddToFavourite = (e) => {
-        e.preventDefault();
-        addToFavourites(movie);
-    };
 
     return(
         <Card sx={{maxWidth: 345}}>
