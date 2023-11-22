@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {useParams} from "react-router-dom";
 import {getMovie} from '../api/tmdb-api';
 import {useQuery} from "react-query";
