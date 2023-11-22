@@ -1,25 +1,19 @@
 import React, {useState} from "react";
 import Header from "../headerMovieList";
-import FilterCard from "../filterMoviesCard";
+import FilterCard from "../filterPeopleCard";
 import PeopleList from "../peopleList";
 import Grid from "@mui/material/Grid";
 
 function PeopleListPageTemplate({people, title}) {
     const [nameFilter, setNameFilter] = useState("");
-    const [genreFilter, setGenreFilter] = useState(0);
-    const genreId = Number(genreFilter);
 
     let displayedPeople = people
         .filter((p) => {
             return p.name && p.name.toLowerCase().search(nameFilter.toLowerCase()) !== -1;
-        })
-        .filter((p) => {
-            return genreId > 0 ? p.genre_ids.includes(genreId) : true;
         });
     
     const handleChange = (type, value) => {
         if(type === "name") setNameFilter(value);
-        else setGenreFilter(value);
     };
 
     return (
@@ -32,7 +26,6 @@ function PeopleListPageTemplate({people, title}) {
                     <FilterCard
                         onUserInput={handleChange}
                         titleFilter={nameFilter}
-                        genreFilter={genreFilter}
                     />
                 </Grid>
                 <PeopleList people={displayedPeople} />
