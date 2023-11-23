@@ -47,7 +47,7 @@ export default function TVShowCard(show) {
                 </Grid>
             </CardContent>
             <CardActions disableSpacing>
-                <Link to={`/`}>
+                <Link to={`/tvshows/${show.show.id}`}>
                     <Button variant="outlined" size="medium" color="primary">
                         More Info...
                     </Button>
