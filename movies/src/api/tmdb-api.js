@@ -122,9 +122,24 @@ export const getPeople = () => {
         }
         return response.json();
     }).then((data) => {
-        console.log('People structure:', data.results.length > 0 ? data.results[0] : 'No people');
+        console.log('People structure:', data.results.length > 0 ? data.results[2] : 'No people');
         return data;
     }).catch((error) => {
         throw error;
+    });
+};
+
+export const getPerson = (args) => {
+    const [, idPart] = args.queryKey;
+    const {id} = idPart;
+    return fetch(
+        `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    ).then((response) => {
+        if(!response.ok) {
+            throw new Error(response.json().message);
+        }
+        return response.json();
+    }).catch((error) => {
+        throw error
     });
 };

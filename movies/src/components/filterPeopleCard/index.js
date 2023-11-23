@@ -4,12 +4,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
 import TextField from "@mui/material/TextField";
 import SearchIcon from "@mui/icons-material/Search";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg';
 import { useQuery } from "react-query";
 import Spinner from '../spinner'
@@ -22,7 +18,7 @@ const formControl = {
 
 export default function FilterPeopleCard(props) {
 
-    const {data, error, isLoading, isError} = useQuery("genres", getGenres);
+    const {error, isLoading, isError} = useQuery("genres", getGenres);
 
     if(isLoading) {
         return <Spinner />;

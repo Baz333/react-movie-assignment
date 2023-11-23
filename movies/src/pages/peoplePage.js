@@ -1,13 +1,11 @@
 import React from "react";
 import {getPeople} from "../api/tmdb-api";
-import PageTemplate from '../components/templatePeoplePage';
+import PageTemplate from '../components/templatePeopleListPage';
 import { useQuery } from 'react-query';
 import Spinner from '../components/spinner';
 
 const TVShowsPage = () => {
-    console.log("Before query");
     const {data, error, isLoading, isError} = useQuery('people', getPeople)
-    console.log("After query");
 
     if (isLoading) {
         return <Spinner />

@@ -12,8 +12,6 @@ import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png';
 
 export default function PeopleCard(person) {
-    console.log("peopleCard");
-    console.log(person);
     return(
         <Card sx={{maxWidth: 345}}>
             <CardHeader
@@ -42,7 +40,7 @@ export default function PeopleCard(person) {
                 </Grid>
             </CardContent>
             <CardActions disableSpacing>
-                <Link to={`/`}>
+                <Link to={`/people/${person.person.id}`}>
                     <Button variant="outlined" size="medium" color="primary">
                         More Info...
                     </Button>
