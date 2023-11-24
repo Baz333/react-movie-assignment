@@ -1,25 +1,51 @@
 import React from "react";
+import {useQuery} from "react-query";
 import PersonHeader from "../personHeader";
+import Spinner from '../spinner';
 import Grid from "@mui/material/Grid";
+import ImageList from "@mui/material/ImageList";
+import ImageListItem from "@mui/material/ImageListItem";
+import { getPersonImages } from "../../api/tmdb-api";
 
 const TemplatePersonPage = ({person, children}) => {
+    const {data, error, isLoading, isError} = useQuery(
+        ["person_images", {id: person.id}],
+        getPersonImages
+    );
+
+    if(isLoading) {
+        return <Spinner />;
+    }
+
+    if(isError) {
+        return <h1>{error.message}</h1>;
+    }
+    const images = data.profiles;
+
     return(
         <>
             <PersonHeader person={person} />
             <Grid container spacing={5} sx={{padding: "15px"}}>
-                <Grid item xs={5}>
+                <Grid item xs={4}>
                     <div sx={{
                         display: "flex",
                         flexWrap: "wrap",
                         justifyContent: "space-around"
                     }}>
-                        <img 
-                            src={`https://image.tmdb.org/t/p/w500/${person.profile_path}`}
-                            alt={person.profile_path}
-                        />
+                        <ImageList 
+                            cols={1}>
+                            {images.map((image) => (
+                                <ImageListItem key={image.file_path} cols={1}>
+                                    <img
+                                        src={`https://image.tmdb.org/t/p/w500/${image.file_path}`}
+                                        alt={image.file_path}
+                                    />
+                                </ImageListItem>
+                            ))}
+                        </ImageList>
                     </div>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={8}>
                     {children}
                 </Grid>
             </Grid>
