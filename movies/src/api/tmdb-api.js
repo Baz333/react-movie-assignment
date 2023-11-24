@@ -179,6 +179,22 @@ export const getTVShow = (args) => {
     });
 };
 
+export const getTVSeason = (args) => {
+    const [, idPart, seasonPart] = args.queryKey;
+    const {id} = idPart;
+    const {season} = seasonPart;
+    return fetch(
+        `https://api.themoviedb.org/3/tv/${id}/season/${season}?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    ).then((response) => {
+        if(!response.ok) {
+            throw new Error(response.json().message);
+        }
+        return response.json();
+    }).catch((error) => {
+        throw error
+    });
+};
+
 export const getPeople = () => {
     return fetch(
         `https://api.themoviedb.org/3/person/popular?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&include_adult=false&page=1`

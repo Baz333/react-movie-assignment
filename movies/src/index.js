@@ -12,6 +12,7 @@ import TVShowsPage from './pages/tvShowsPage';
 import PeoplePage from './pages/peoplePage';
 import PersonPage from './pages/peopleDetailsPage';
 import TVShowPage from './pages/tvShowDetailsPage';
+import TVSeasonPage from './pages/tvSeasonDetailsPage';
 import SiteHeader from './components/siteHeader';
 import MoviesContextProvider from './contexts/moviesContext';
 import { QueryClientProvider, QueryClient } from "react-query";
@@ -40,6 +41,7 @@ const App = () => {
 						<Route path="/movies/top-rated" element={<TopRatedMoviesPage />} />
 						<Route path="/tvshows" element={<TVShowsPage />} />
 						<Route path="/tvshows/:id" element={<TVShowPage />} />
+						<Route path="/tvshows/:id/season/:season" element={<TVSeasonPage />} />
 						<Route path="/people" element={<PeoplePage />} />
 						<Route path="/people/:id" element={<PersonPage />} />
 						<Route path="*" element={<Navigate to="/" />} />

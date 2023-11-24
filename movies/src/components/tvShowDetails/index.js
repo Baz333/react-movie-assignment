@@ -6,6 +6,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 import Typography from "@mui/material/Typography";
+import {Link} from "react-router-dom";
 
 const root = {
     display: "flex",
@@ -18,8 +19,19 @@ const root = {
 
 const chip = {margin: 0.5};
 
-
 const TVShowDetails = ({show}) => {
+
+    const seasonsList = [];
+
+    for(let i = 0; i < show.number_of_seasons; i++) {
+        seasonsList.push(
+            <Link to={`/tvshows/${show.id}/season/${i+1}`}>
+                <Paper sx={{...root}}>
+                    Season {i+1}
+                </Paper>
+            </Link>
+        );
+    }
 
     return (
         <>
@@ -60,6 +72,12 @@ const TVShowDetails = ({show}) => {
                         <Chip label={l.english_name} sx={{...chip}} />
                     </li>
                 ))}
+            </Paper><br />
+            <Paper
+                component="ul"
+                sx={{...root}}
+            >
+                {seasonsList}
             </Paper>
         </>
     );
