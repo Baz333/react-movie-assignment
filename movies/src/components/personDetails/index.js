@@ -1,4 +1,5 @@
 import React from "react";
+import {useQuery} from "react-query";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import MaleIcon from '@mui/icons-material/Male';
@@ -8,6 +9,9 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PlaceIcon from '@mui/icons-material/Place';
 import Typography from "@mui/material/Typography";
+import { getPersonMovieCredits } from "../../api/tmdb-api";
+import Spinner from '../spinner';
+import CastListing from "../castListing";
 
 const root = {
     display: "flex",
@@ -43,7 +47,28 @@ const genders = [
 const PersonDetails = ({person}) => {
 
     const personGender = genders.find(g => g.value === person.gender);
-    console.log(person);
+    const {data, error, isLoading, isError} = useQuery(
+        ["person_movie_credits", {id: person.id}],
+        getPersonMovieCredits
+    );
+
+    if(isLoading) {
+        return <Spinner />;
+    }
+
+    if(isError) {
+        return <h1>{error.message}</h1>;
+    }
+
+    const cast = data.cast;
+
+    const castList = [];
+
+    for(let i = 0; i < cast.length; i++) {
+        castList.push(
+            <CastListing movie={cast[i]} />
+        )
+    }
 
     return (
         <>
@@ -58,7 +83,16 @@ const PersonDetails = ({person}) => {
                 <Chip icon={personGender.icon} label={`Gender: ${personGender.gender}`} sx={{...chip}}  />
                 <Chip icon={<CalendarMonthIcon />} label={`Date of birth: ${person.birthday}`} sx={{...chip}} />
                 <Chip icon={<PlaceIcon />} label={`Birthplace: ${person.place_of_birth}`} sx={{...chip}} />
-            </Paper>
+            </Paper><br />
+            {castList.length > 0 && <Typography variant="h5" component="h3">
+                Movies
+            </Typography>}
+            {castList.length > 0 && <Paper
+                component="ul"
+                sx={{...root}}
+            >
+                {castList}
+            </Paper>}
         </>
     );
 };
