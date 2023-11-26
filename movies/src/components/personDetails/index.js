@@ -9,9 +9,12 @@ import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import PlaceIcon from '@mui/icons-material/Place';
 import Typography from "@mui/material/Typography";
-import { getPersonMovieCredits } from "../../api/tmdb-api";
+import { getPersonMovieCredits, getPersonTVCredits } from "../../api/tmdb-api";
 import Spinner from '../spinner';
-import CastListing from "../castListing";
+import MovieCastListing from "../movieCastListing";
+import TVCastListing from "../tvCastListing";
+import Grid from "@mui/material/Grid";
+import { func } from "prop-types";
 
 const root = {
     display: "flex",
@@ -44,29 +47,59 @@ const genders = [
     }
 ]
 
+function compare(a, b) {
+    if ( a.popularity < b.popularity ){
+        return 1;
+      }
+      if ( a.popularity > b.popularity ){
+        return -1;
+      }
+      return 0;
+}
+
 const PersonDetails = ({person}) => {
 
     const personGender = genders.find(g => g.value === person.gender);
-    const {data, error, isLoading, isError} = useQuery(
+    const {data: moviesData, error: moviesError, isLoading: moviesIsLoading, isError: moviesIsError} = useQuery(
         ["person_movie_credits", {id: person.id}],
         getPersonMovieCredits
     );
+    const {data: tvData, error: tvError, isLoading: tvIsLoading, isError: tvIsError} = useQuery(
+        ["person_tv_credits", {id: person.id}],
+        getPersonTVCredits
+    );
 
-    if(isLoading) {
+    if(moviesIsLoading || tvIsLoading) {
         return <Spinner />;
     }
 
-    if(isError) {
-        return <h1>{error.message}</h1>;
+    if(moviesIsError) {
+        return <h1>{moviesError.message}</h1>;
+    } else if(tvIsError) {
+        return <h1>{tvError.message}</h1>
     }
 
-    const cast = data.cast;
+    const castMovies = moviesData.cast;
+    const castTV = tvData.cast;
+    castMovies.sort(compare);
+    castTV.sort(compare);
+    
+    const movieCastList = [];
+    const tvCastList = [];
 
-    const castList = [];
+    for(let i = 0; i < castMovies.length; i++) {
+        movieCastList.push(
+            <Grid key={castMovies[i].id} item xs={12} sm={6} md={4} lg={3}>
+                <MovieCastListing key={castMovies[i].id} movie={castMovies[i]} />
+            </Grid>
+        )
+    }
 
-    for(let i = 0; i < cast.length; i++) {
-        castList.push(
-            <CastListing movie={cast[i]} />
+    for(let i = 0; i < castTV.length; i++) {
+        tvCastList.push(
+            <Grid key={castTV[i].id} item xs={12} sm={6} md={4} lg={3}>
+                <TVCastListing key={castTV[i].id} show={castTV[i]} />
+            </Grid>
         )
     }
 
@@ -84,14 +117,24 @@ const PersonDetails = ({person}) => {
                 <Chip icon={<CalendarMonthIcon />} label={`Date of birth: ${person.birthday}`} sx={{...chip}} />
                 <Chip icon={<PlaceIcon />} label={`Birthplace: ${person.place_of_birth}`} sx={{...chip}} />
             </Paper><br />
-            {castList.length > 0 && <Typography variant="h5" component="h3">
+            {movieCastList.length > 0 && <Typography variant="h5" component="h3">
                 Movies
             </Typography>}
-            {castList.length > 0 && <Paper
+            {movieCastList.length > 0 && <Paper
                 component="ul"
                 sx={{...root}}
             >
-                {castList}
+                {movieCastList}
+            </Paper>}<br />
+
+            {tvCastList.length > 0 && <Typography variant="h5" component="h3">
+                TV Shows
+            </Typography>}
+            {tvCastList.length > 0 && <Paper
+                component="ul"
+                sx={{...root}}
+            >
+                {tvCastList}
             </Paper>}
         </>
     );
