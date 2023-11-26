@@ -123,6 +123,21 @@ export const getMovieReviews = (id) => {
     });
 };
 
+export const getMovieCast = (args) => {
+    const [, idPart] = args.queryKey;
+    const {id} = idPart;
+    return fetch(
+        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    ).then((response) => {
+        if(!response.ok) {
+            throw new Error(response.json().message);
+        }
+        return response.json();
+    }).catch((error) => {
+        throw error
+    });
+};
+
 export const getUpcomingMovies = (args) => {
     const [,] = args.queryKey;
     return fetch(
@@ -179,12 +194,43 @@ export const getTVShow = (args) => {
     });
 };
 
+export const getTVShowCast = (args) => {
+    const [, idPart] = args.queryKey;
+    const {id} = idPart;
+    return fetch(
+        `https://api.themoviedb.org/3/tv/${id}/credits?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    ).then((response) => {
+        if(!response.ok) {
+            throw new Error(response.json().message);
+        }
+        return response.json();
+    }).catch((error) => {
+        throw error
+    });
+};
+
 export const getTVSeason = (args) => {
     const [, idPart, seasonPart] = args.queryKey;
     const {id} = idPart;
     const {season} = seasonPart;
     return fetch(
         `https://api.themoviedb.org/3/tv/${id}/season/${season}?api_key=${process.env.REACT_APP_TMDB_KEY}`
+    ).then((response) => {
+        if(!response.ok) {
+            throw new Error(response.json().message);
+        }
+        return response.json();
+    }).catch((error) => {
+        throw error
+    });
+};
+
+export const getTVSeasonCast = (args) => {
+    const [, idPart, seasonPart] = args.queryKey;
+    const {id} = idPart;
+    const {season} = seasonPart;
+    return fetch(
+        `https://api.themoviedb.org/3/tv/${id}/season/${season}/credits?api_key=${process.env.REACT_APP_TMDB_KEY}`
     ).then((response) => {
         if(!response.ok) {
             throw new Error(response.json().message);
@@ -248,9 +294,6 @@ export const getPersonTVCredits = (args) => {
             throw new Error(response.json().message);
         }
         return response.json();
-    }).then((data) => {
-        console.log(data);
-        return data;
     }).catch((error) => {
         throw error
     });

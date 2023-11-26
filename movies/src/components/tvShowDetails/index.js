@@ -1,4 +1,5 @@
 import React from "react";
+import {useQuery} from "react-query";
 import Chip from "@mui/material/Chip";
 import Paper from "@mui/material/Paper";
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
@@ -7,6 +8,10 @@ import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
 import SlideshowIcon from '@mui/icons-material/Slideshow';
 import Typography from "@mui/material/Typography";
 import {Link} from "react-router-dom";
+import { getTVShowCast } from "../../api/tmdb-api";
+import Spinner from '../spinner';
+import CastListing from "../cast";
+import Grid from "@mui/material/Grid";
 
 const root = {
     display: "flex",
@@ -20,6 +25,31 @@ const root = {
 const chip = {margin: 0.5};
 
 const TVShowDetails = ({show}) => {
+
+    const {data, error, isLoading, isError} = useQuery(
+        ["show_cast", {id: show.id}],
+        getTVShowCast
+    );
+
+    if(isLoading) {
+        return <Spinner />;
+    }
+
+    if(isError) {
+        return <h1>{error.message}</h1>;
+    }
+
+    const castTV = data.cast;
+    
+    const castList = [];
+
+    for(let i = 0; i < castTV.length; i++) {
+        castList.push(
+            <Grid key={castTV[i].id} item xs={12} sm={6} md={4} lg={3}>
+                <CastListing key={castTV[i].id} person={castTV[i]} />
+            </Grid>
+        )
+    }
 
     const seasonsList = [];
 
@@ -78,6 +108,15 @@ const TVShowDetails = ({show}) => {
                 sx={{...root}}
             >
                 {seasonsList}
+            </Paper>
+            <Typography variant="h5" component="h3">
+                Cast
+            </Typography>
+            <Paper
+                component="ul"
+                sx={{...root}}
+            >
+                {castList}
             </Paper>
         </>
     );

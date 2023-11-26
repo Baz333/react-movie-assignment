@@ -13,7 +13,7 @@ const TemplateTVSeasonPage = ({season, children}) => {
                         flexWrap: "wrap",
                         justifyContent: "space-around"
                     }}>
-                        <img src={`https://image.tmdb.org/t/p/w500/${season.poster_path}`} alt={season.poster_path} />
+                        {season.poster_path ? <img src={`https://image.tmdb.org/t/p/w500/${season.poster_path}`} alt={season.poster_path} /> : <img src="../../images/film-poster-placeholder.png" alt="Missing" />}
                     </div>
                 </Grid>
                 <Grid item xs={6}>

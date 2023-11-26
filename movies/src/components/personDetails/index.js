@@ -14,7 +14,6 @@ import Spinner from '../spinner';
 import MovieCastListing from "../movieCastListing";
 import TVCastListing from "../tvCastListing";
 import Grid from "@mui/material/Grid";
-import { func } from "prop-types";
 
 const root = {
     display: "flex",
