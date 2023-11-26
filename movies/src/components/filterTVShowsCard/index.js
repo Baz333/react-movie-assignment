@@ -1,5 +1,5 @@
 import React from "react";
-import {getTVGenres} from "../../api/tmdb-api";
+import {getTVGenres, getLanguages} from "../../api/tmdb-api";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -20,21 +20,38 @@ const formControl = {
     backgroundColor: "rgb(255, 255, 255)"
 };
 
-export default function FilterMoviesCard(props) {
+function compare(a, b) {
+    if ( a.english_name < b.english_name ){
+        return -1;
+      }
+      if ( a.english_name > b.english_name ){
+        return 1;
+      }
+      return 0;
+}
 
-    const {data, error, isLoading, isError} = useQuery("genres", getTVGenres);
+export default function FilterTVShowsCard(props) {
 
-    if(isLoading) {
+    const {data: genreData, error: genreError, isLoading: genreIsLoading, isError: genreIsError} = useQuery("genres", getTVGenres);
+    const {data: languageData, error: languageError, isLoading: languageIsLoading, isError: languageIsError} = useQuery("languages", getLanguages);
+
+
+    if(genreIsLoading || languageIsLoading) {
         return <Spinner />;
     }
 
-    if(isError) {
-        return <h1>{error.message}</h1>;
+    if(genreIsError) {
+        return <h1>{genreError.message}</h1>;
+    } else if(languageIsError) {
+        return <h1>{languageError.message}</h1>
     }
-    const genres = data.genres;
+
+    const genres = genreData.genres;
     if(genres[0].name !== "All") {
         genres.unshift({id:"0", name:"All"});
     }
+    const languages = languageData;
+    languages.sort(compare);
 
     const handleChange = (e, type, value) => {
         e.preventDefault();
@@ -47,6 +64,10 @@ export default function FilterMoviesCard(props) {
 
     const handleGenreChange = (e) => {
         handleChange(e, "genre", e.target.value)
+    }
+
+    const handleLanguageChange = (e) => {
+        handleChange(e, "language", e.target.value)
     }
 
     return (
@@ -83,6 +104,27 @@ export default function FilterMoviesCard(props) {
                             return (
                                 <MenuItem key={genre.id} value={genre.id}>
                                     {genre.name}
+                                </MenuItem>
+                            );
+                        })}
+                    </Select>
+                </FormControl>^
+                <FormControl sx={{...formControl}}>
+                    <InputLabel id="language-label">Language</InputLabel>
+                    <Select
+                        labelId="language-label"
+                        id="language-select"
+                        defaultValue=""
+                        value={props.languageFilter}
+                        onChange={handleLanguageChange}
+                    >
+                        <MenuItem key="all" value="all">
+                            All languages
+                        </MenuItem>
+                        {languages.map((language) => {
+                            return (
+                                <MenuItem key={language.iso_639_1} value={language.iso_639_1}>
+                                    {language.english_name}
                                 </MenuItem>
                             );
                         })}
