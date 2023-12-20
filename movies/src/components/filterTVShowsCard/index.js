@@ -108,7 +108,7 @@ export default function FilterTVShowsCard(props) {
                             );
                         })}
                     </Select>
-                </FormControl>^
+                </FormControl>
                 <FormControl sx={{...formControl}}>
                     <InputLabel id="language-label">Language</InputLabel>
                     <Select

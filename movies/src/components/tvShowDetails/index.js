@@ -55,11 +55,13 @@ const TVShowDetails = ({show}) => {
 
     for(let i = 0; i < show.number_of_seasons; i++) {
         seasonsList.push(
-            <Link to={`/tvshows/${show.id}/season/${i+1}`}>
-                <Paper sx={{...root}}>
-                    Season {i+1}
-                </Paper>
-            </Link>
+            <li key={i}>
+                <Link to={`/tvshows/${show.id}/season/${i+1}`}>
+                    <Paper sx={{...root}}>
+                        Season {i+1}
+                    </Paper>
+                </Link>
+            </li>
         );
     }
 

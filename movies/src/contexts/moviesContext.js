@@ -1,4 +1,3 @@
-import Favorite from "@mui/icons-material/Favorite";
 import React, {useState} from "react";
 
 export const MoviesContext = React.createContext(null);

@@ -28,7 +28,7 @@ const chip = {margin: 0.5};
 const MovieDetails = ({movie}) => {
     const [drawerOpen, setDrawerOpen] = useState(false);
     const {data, error, isLoading, isError} = useQuery(
-        ["cast", {id: movie.id}],
+        ["movie_cast", {id: movie.id}],
         getMovieCast
     );
 

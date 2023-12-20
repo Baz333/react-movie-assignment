@@ -153,19 +153,30 @@ export const getMovieCast = (args) => {
     });
 };
 
-export const getUpcomingMovies = (args) => {
-    const [,] = args.queryKey;
-    return fetch(
-        `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
-    ).then((response) => {
-        if(!response.ok) {
-            throw new Error(response.json().message);
+// export const getUpcomingMovies = (args) => {
+//     const [,] = args.queryKey;
+//     return fetch(
+//         `https://api.themoviedb.org/3/movie/upcoming?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
+//     ).then((response) => {
+//         if(!response.ok) {
+//             throw new Error(response.json().message);
+//         }
+//         return response.json();
+//     }).catch((error) => {
+//         throw error
+//     });
+// };
+
+export const getUpcomingMovies = async () => {
+    const res = await fetch(
+        `http://localhost:8080/api/movies/tmdb/upcoming`, {
+            headers: {
+                'Authorization': window.localStorage.getItem('token')
+            }
         }
-        return response.json();
-    }).catch((error) => {
-        throw error
-    });
-};
+    );
+    return res.json();
+}
 
 export const getTopRatedMovies = (args) => {
     const [,] = args.queryKey;

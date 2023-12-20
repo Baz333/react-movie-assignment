@@ -9,8 +9,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import img from '../../images/film-poster-placeholder.png';
 
-export default function castListingCard({person}) {
-    console.log(person.profile_path)
+export default function castListingCard({person}) { 
     return(
         <Card sx={{width:200}}>
             <CardMedia
