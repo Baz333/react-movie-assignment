@@ -1,6 +1,6 @@
 import React from "react";
 import {useParams} from "react-router-dom";
-import {getTVSeason} from '../api/tmdb-api';
+import {getTVSeason} from '../api/movies-api';
 import {useQuery} from "react-query";
 import Spinner from '../components/spinner';
 import TVSeasonDetails from "../components/tvSeasonDetails";

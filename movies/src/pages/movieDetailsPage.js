@@ -1,6 +1,6 @@
 import React from "react";
 import {useParams} from "react-router-dom";
-import {getMovie} from '../api/tmdb-api';
+import {getMovie} from '../api/movies-api';
 import {useQuery} from "react-query";
 import Spinner from '../components/spinner';
 import MovieDetails from "../components/movieDetails/";

@@ -28,18 +28,6 @@ export const getMovies = () => {
 //     });
 // };
 
-export const getMovie = async (args) => {
-    const [, idPart] = args.queryKey;
-    const {id} = idPart;
-    console.log(idPart);
-    const res = await fetch(
-        `http://localhost:8080/api/movies/${id}`, {
-            headers: {'Authorization': window.localStorage.getItem('token')}
-        }
-    );
-    return res.json();
-}
-
 export const getGenres = () => {
     return fetch(
         "https://api.themoviedb.org/3/genre/movie/list?api_key=" +
@@ -179,17 +167,6 @@ export const getMovieCast = (args) => {
 //     });
 // };
 
-export const getUpcomingMovies = async () => {
-    const res = await fetch(
-        `http://localhost:8080/api/movies/tmdb/upcoming`, {
-            headers: {
-                'Authorization': window.localStorage.getItem('token')
-            }
-        }
-    );
-    return res.json();
-}
-
 // export const getTopRatedMovies = (args) => {
 //     const [,] = args.queryKey;
 //     return fetch(
@@ -203,17 +180,6 @@ export const getUpcomingMovies = async () => {
 //         throw error;
 //     });
 // };
-
-export const getTopRatedMovies = async () => {
-    const res = await fetch(
-        `http://localhost:8080/api/movies/tmdb/top-rated`, {
-            headers: {
-                'Authorization': window.localStorage.getItem('token')
-            }
-        }
-    );
-    return res.json();
-}
 
 export const getTVShows = () => {
     return fetch(
@@ -242,18 +208,6 @@ export const getTVShows = () => {
 //         throw error
 //     });
 // };
-
-export const getTVShow = async (args) => {
-    const [, idPart] = args.queryKey;
-    const {id} = idPart;
-    console.log(idPart);
-    const res = await fetch(
-        `http://localhost:8080/api/tvshows/${id}`, {
-            headers: {'Authorization': window.localStorage.getItem('token')}
-        }
-    );
-    return res.json();
-}
 
 export const getTVShowCast = (args) => {
     const [, idPart] = args.queryKey;
@@ -285,19 +239,6 @@ export const getTVShowCast = (args) => {
 //         throw error
 //     });
 // };
-
-export const getTVSeason = async (args) => {
-    const [, idPart, seasonPart] = args.queryKey;
-    const {id} = idPart;
-    const {season} = seasonPart;
-    console.log(idPart);
-    const res = await fetch(
-        `http://localhost:8080/api/tvshows/${id}/season/${season}`, {
-            headers: {'Authorization': window.localStorage.getItem('token')}
-        }
-    );
-    return res.json();
-}
 
 export const getTVSeasonCast = (args) => {
     const [, idPart, seasonPart] = args.queryKey;
@@ -342,18 +283,6 @@ export const getPeople = () => {
 //         throw error
 //     });
 // };
-
-export const getPerson = async (args) => {
-    const [, idPart] = args.queryKey;
-    const {id} = idPart;
-    console.log(idPart);
-    const res = await fetch(
-        `http://localhost:8080/api/people/${id}`, {
-            headers: {'Authorization': window.localStorage.getItem('token')}
-        }
-    );
-    return res.json();
-}
 
 export const getPersonMovieCredits = (args) => {
     const [, idPart] = args.queryKey;
