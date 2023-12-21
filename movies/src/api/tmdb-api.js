@@ -190,19 +190,30 @@ export const getUpcomingMovies = async () => {
     return res.json();
 }
 
-export const getTopRatedMovies = (args) => {
-    const [,] = args.queryKey;
-    return fetch(
-        `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
-    ).then((response) => {
-        if(!response.ok) {
-            throw new Error(response.json().message);
+// export const getTopRatedMovies = (args) => {
+//     const [,] = args.queryKey;
+//     return fetch(
+//         `https://api.themoviedb.org/3/movie/top_rated?api_key=${process.env.REACT_APP_TMDB_KEY}&language=en-US&page=1`
+//     ).then((response) => {
+//         if(!response.ok) {
+//             throw new Error(response.json().message);
+//         }
+//         return response.json();
+//     }).catch((error) => {
+//         throw error;
+//     });
+// };
+
+export const getTopRatedMovies = async () => {
+    const res = await fetch(
+        `http://localhost:8080/api/movies/tmdb/top-rated`, {
+            headers: {
+                'Authorization': window.localStorage.getItem('token')
+            }
         }
-        return response.json();
-    }).catch((error) => {
-        throw error;
-    });
-};
+    );
+    return res.json();
+}
 
 export const getTVShows = () => {
     return fetch(
@@ -217,20 +228,32 @@ export const getTVShows = () => {
     });
 };
 
-export const getTVShow = (args) => {
+// export const getTVShow = (args) => {
+//     const [, idPart] = args.queryKey;
+//     const {id} = idPart;
+//     return fetch(
+//         `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
+//     ).then((response) => {
+//         if(!response.ok) {
+//             throw new Error(response.json().message);
+//         }
+//         return response.json();
+//     }).catch((error) => {
+//         throw error
+//     });
+// };
+
+export const getTVShow = async (args) => {
     const [, idPart] = args.queryKey;
     const {id} = idPart;
-    return fetch(
-        `https://api.themoviedb.org/3/tv/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
-    ).then((response) => {
-        if(!response.ok) {
-            throw new Error(response.json().message);
+    console.log(idPart);
+    const res = await fetch(
+        `http://localhost:8080/api/tvshows/${id}`, {
+            headers: {'Authorization': window.localStorage.getItem('token')}
         }
-        return response.json();
-    }).catch((error) => {
-        throw error
-    });
-};
+    );
+    return res.json();
+}
 
 export const getTVShowCast = (args) => {
     const [, idPart] = args.queryKey;
@@ -247,21 +270,34 @@ export const getTVShowCast = (args) => {
     });
 };
 
-export const getTVSeason = (args) => {
+// export const getTVSeason = (args) => {
+//     const [, idPart, seasonPart] = args.queryKey;
+//     const {id} = idPart;
+//     const {season} = seasonPart;
+//     return fetch(
+//         `https://api.themoviedb.org/3/tv/${id}/season/${season}?api_key=${process.env.REACT_APP_TMDB_KEY}`
+//     ).then((response) => {
+//         if(!response.ok) {
+//             throw new Error(response.json().message);
+//         }
+//         return response.json();
+//     }).catch((error) => {
+//         throw error
+//     });
+// };
+
+export const getTVSeason = async (args) => {
     const [, idPart, seasonPart] = args.queryKey;
     const {id} = idPart;
     const {season} = seasonPart;
-    return fetch(
-        `https://api.themoviedb.org/3/tv/${id}/season/${season}?api_key=${process.env.REACT_APP_TMDB_KEY}`
-    ).then((response) => {
-        if(!response.ok) {
-            throw new Error(response.json().message);
+    console.log(idPart);
+    const res = await fetch(
+        `http://localhost:8080/api/tvshows/${id}/season/${season}`, {
+            headers: {'Authorization': window.localStorage.getItem('token')}
         }
-        return response.json();
-    }).catch((error) => {
-        throw error
-    });
-};
+    );
+    return res.json();
+}
 
 export const getTVSeasonCast = (args) => {
     const [, idPart, seasonPart] = args.queryKey;
@@ -292,20 +328,32 @@ export const getPeople = () => {
     });
 };
 
-export const getPerson = (args) => {
+// export const getPerson = (args) => {
+//     const [, idPart] = args.queryKey;
+//     const {id} = idPart;
+//     return fetch(
+//         `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
+//     ).then((response) => {
+//         if(!response.ok) {
+//             throw new Error(response.json().message);
+//         }
+//         return response.json();
+//     }).catch((error) => {
+//         throw error
+//     });
+// };
+
+export const getPerson = async (args) => {
     const [, idPart] = args.queryKey;
     const {id} = idPart;
-    return fetch(
-        `https://api.themoviedb.org/3/person/${id}?api_key=${process.env.REACT_APP_TMDB_KEY}`
-    ).then((response) => {
-        if(!response.ok) {
-            throw new Error(response.json().message);
+    console.log(idPart);
+    const res = await fetch(
+        `http://localhost:8080/api/people/${id}`, {
+            headers: {'Authorization': window.localStorage.getItem('token')}
         }
-        return response.json();
-    }).catch((error) => {
-        throw error
-    });
-};
+    );
+    return res.json();
+}
 
 export const getPersonMovieCredits = (args) => {
     const [, idPart] = args.queryKey;

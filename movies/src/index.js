@@ -42,12 +42,8 @@ const App = () => {
 					<Routes>
 						<Route path="/movies/favourites" element={<FavouriteMoviesPage />} />
 						<Route path="/" element={<HomePage />} />
-						<Route path="/movies/top-rated" element={<TopRatedMoviesPage />} />
 						<Route path="/tvshows" element={<TVShowsPage />} />
-						<Route path="/tvshows/:id" element={<TVShowPage />} />
-						<Route path="/tvshows/:id/season/:season" element={<TVSeasonPage />} />
 						<Route path="/people" element={<PeoplePage />} />
-						<Route path="/people/:id" element={<PersonPage />} />
 						<Route path="*" element={<Navigate to="/" />} />
 						<Route path="/reviews/:id" element={<MovieReviewPage />} />
 						<Route path="/reviews/form" element={<AddMovieReviewPage />} />
@@ -55,7 +51,11 @@ const App = () => {
 						<Route path="/signup" element={<SignupPage />} />
 						<Route element={<ProtectedRoutes />}>
 							<Route path="/movies/:id" element={<MoviePage />} />
+							<Route path="/tvshows/:id" element={<TVShowPage />} />
+							<Route path="/tvshows/:id/season/:season" element={<TVSeasonPage />} />
+							<Route path="/people/:id" element={<PersonPage />} />
 							<Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
+							<Route path="/movies/top-rated" element={<TopRatedMoviesPage />} />
 						</Route>
 					</Routes>
 				</MoviesContextProvider>
